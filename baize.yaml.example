@@ -1,0 +1,116 @@
+# Baize (白泽) Configuration
+# ============================
+# This file is git-ignored by default. Use baize.yaml.example as a template.
+# Sensitive values should use ${ENV_VAR} syntax (e.g., ${OPENAI_API_KEY}).
+
+project:
+  name: my-project
+  path: .
+  languages:
+    - java
+  framework: []
+
+codeql:
+  cli_path: ""                   # empty = auto-detect from PATH
+  queries_path: ""               # path to github/codeql clone; empty = auto-detect (sibling dir or CodeQL pack refs). Supports ${ENV_VAR}.
+  database:
+    name: baize-db
+    path: .baize/db
+    build_command: ""            # empty = auto-detect
+    incremental: true
+    threads: 4
+    timeout: 3600
+  analysis:
+    threads: 4
+    ram: "4096"                  # MB; use 2048 on WSL
+    timeout: 3600
+  queries:
+    builtin:
+      - security-extended
+    custom: []
+
+llm:
+  primary:
+    provider: openai
+    model: gpt-4o
+    api_key: ${OPENAI_API_KEY}
+    base_url: ""
+    temperature: 0.2
+    timeout: 60
+    max_retries: 3
+  secondary:
+    provider: openai
+    model: gpt-4o-mini
+    api_key: ${OPENAI_API_KEY}
+    temperature: 0.1
+    timeout: 30
+    max_retries: 2
+  embedding:
+    provider: openai
+    model: text-embedding-3-small
+    api_key: ${OPENAI_API_KEY}
+    temperature: 0.2
+    timeout: 30
+    max_retries: 3
+
+multi_agent:
+  enabled: true
+  agents:
+    - auditor
+    - query_generator
+    - processor
+    - fix_suggester
+    - knowledge
+
+vulnerabilities:
+  enabled:
+    - sqli
+    - xss
+    - rce
+    - ssrf
+    - deserialization
+    - path-traversal
+  severity_filter:
+    - high
+    - critical
+
+scheduler:
+  timeout_strategy: warn
+  progress_interval: 10
+  resource_limits:
+    max_cpu_percent: 80
+    max_memory_percent: 80
+    max_disk_usage_gb: 10
+
+dataflow:
+  sources: []
+  sinks: []
+  sanitizers: []
+
+report:
+  output_dir: .baize/reports
+  formats:
+    - json
+    - markdown
+  include_dataflow: true
+  include_fixes: false
+  max_findings: 100
+
+fixes:
+  enabled: true
+  auto_apply: false
+  review_required: true
+
+knowledge_base:
+  enabled: true
+  path: .baize/kb
+  retrieval_top_k: 5
+
+audit:
+  enable_triage: true
+  enable_db_cache: true
+  enable_delta: false
+  force_rebuild: false
+  build_timeout: 1800
+
+version: "2.0"

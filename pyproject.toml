@@ -1,0 +1,90 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "baize"
+version = "0.1.0"
+description = "AI Agent × CodeQL Intelligent Code Audit Orchestration Engine"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Baize Contributors" },
+]
+keywords = ["codeql", "security", "static-analysis", "ai-agent", "audit"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "typer[all]>=0.15.0",
+    "pydantic>=2.0",
+    "pydantic-settings>=2.0",
+    "loguru>=0.7.0",
+    "rich>=13.0",
+    "jinja2>=3.0",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.0",
+    "psutil>=6.0",
+    "httpx>=0.27.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-cov>=6.0",
+    "mypy>=1.0",
+    "ruff>=0.8.0",
+    "mkdocs-material>=9.0",
+    "mkdocstrings[python]>=0.26.0",
+]
+agent = [
+    "litellm>=1.0",
+    "chromadb>=0.5.0",
+]
+
+[project.scripts]
+baize = "baize.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/sheep-sys-sudo/baize"
+Documentation = "https://github.com/sheep-sys-sudo/baize#readme"
+Repository = "https://github.com/sheep-sys-sudo/baize.git"
+Issues = "https://github.com/sheep-sys-sudo/baize/issues"
+
+[tool.hatch.build.targets.sdist]
+include = ["/baize", "/tests", "/docs"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["baize"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "D", "UP", "YTT", "ANN", "S", "BLE", "FBT", "B", "A", "COM", "C4", "DTZ", "T10", "DJ", "EM", "EXE", "ISC", "ICN", "G", "INP", "PIE", "T20", "PYI", "PT", "Q", "RSE", "RET", "SLF", "SIM", "TID", "TCH", "ARG", "PTH", "ERA", "PD", "PGH", "PL", "TRY", "RUF"]
+ignore = [
+    "D100", "D101", "D102", "D103", "D104", "D105",  # docstring rules
+    "ANN101", "ANN102", "ANN401",  # typing rules
+    "S101",  # assert
+    "PLR0913",  # too many arguments
+    "PLR2004",  # magic value comparison
+    "TRY003",  # raise exception from long message
+    "INP001",  # private package
+]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+show_error_codes = true

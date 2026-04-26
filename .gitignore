@@ -1,0 +1,63 @@
+# ── Python ──────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+dist/
+build/
+eggs/
+sdist/
+wheels/
+*.whl
+
+# ── Virtual Environment ─────────────────────────────
+.venv/
+venv/
+env/
+
+# ── IDE / Editor ────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Baize Runtime Data ──────────────────────────────
+.baize/
+db/
+
+# ── Config (contains local credentials) ─────────────
+baize.yaml
+
+# ── Testing / Coverage ──────────────────────────────
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.dmypy.json
+dmypy.json
+
+# ── OS ─────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Development ─────────────────────────────────────
+.claude/
+development/
+资料/
+
+# ── Queries (local copies of github/codeql) ──────────
+/queries/
+
+# ── Skills ──────────────────────────────────────────
+skills/
+
+# ── Lock file (use uv.lock or requirements.txt) ─────
+uv.lock
+
+# ── Docs build ──────────────────────────────────────
+site/
